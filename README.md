@@ -1,1 +1,1 @@
-# Password_strength_checker
+"A Python-based password strength checker with data breach detection."
