@@ -1,6 +1,7 @@
 import re
 import hashlib
 import requests
+import string
 
 def check_password_strength(password):
     strength_score = 0
@@ -13,7 +14,7 @@ def check_password_strength(password):
         strength_score += 1
     if re.search(r'[\d]',password):
         strength_score += 1
-    if re.search(r'[punctuation]',password):
+    if re.search(r'[{}]'.format(re.escape(string.punctuation)), password):
         strength_score += 1
 
     strength_levels = {
@@ -35,7 +36,7 @@ def check_password_breach(password):
     response = requests.get(url)
     
     if suffix in response.text:
-        return "This password has been compromised! Try new one."
+        return "Sorry! This password has been compromised, try new one."
     else:
         return "This is a secure password."
     
@@ -47,4 +48,6 @@ if __name__ == "__main__":
     
     breach_status = check_password_breach(password)
     print(breach_status)
+
+
 
